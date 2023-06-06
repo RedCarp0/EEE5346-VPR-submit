@@ -1,0 +1,44 @@
+experimentName: LCD experiment 8
+search_space:
+  # gnn_variant:
+  #   _type: choice
+  #   _value: [ 0, 1, 2 ]  
+  tiny_test_ratio:
+    _type: uniform
+    _value: [ 0.3 , 0.7 ]  
+  dist_thresh:
+    _type: uniform
+    _value: [ 20 , 70 ] 
+  # select_intval:
+  #   _type: choice
+  #   _value: [ 7, 10 ]  
+  # context_vec_dim:
+  #   _type: choice
+  #   _value: [ 256, 512 ]     
+  lr:
+    _type: loguniform
+    _value: [ 0.00005, 0.003 ]
+  layers:
+    _type: choice
+    _value: [ 2, 3 ]    
+  dropout_rat:
+    _type: uniform
+    _value: [ 0.25, 0.5 ] 
+      
+
+trial_command: python run_experiment.py
+trial_code_directory: ..
+
+trialGpuNumber: 1
+trial_concurrency: 6
+max_trial_number: 36
+
+tuner:
+  name: TPE
+  class_args:
+    optimize_mode: maximize
+
+training_service:
+  platform: local
+  useActiveGpu: True
+  maxTrialNumberPerGpu: 3
